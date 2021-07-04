@@ -17,45 +17,19 @@
             height: 200px;
         }
 
-        .box-one{
-
-        }
+        
     </style>
 
 </head>
 <body>
-<!--    form layout-->
+<!--  form layout-->
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-4">
+ <!--output part -->
                 <div class="">
 
-<!--                <div class="d-flex my-3 mb-3 border border-1 align-items-center justify-content-between pb-1" style="height: 50px">-->
-<!--                    <span id="aa" class="text-dark-50 ps-2">-->
-<!--                        စျေးနှုန်း-->
-<!--                    </span>-->
-<!--                    <p id="bb" class="mb-0 w-auto pe-2">-->
-<!--                       0 ကျပ်-->
-<!--                    </p>-->
-<!--                </div>-->
 
-<!--                 <div class="d-flex my-3 mb-3 border border-1 align-items-center justify-content-between pb-1" style="height: 50px">-->
-<!--                    <span id="cc" class="text-dark-50 ps-2">-->
-<!--                        စျေးနှုန်း-->
-<!--                    </span>-->
-<!--                    <p id="dd" class="mb-0 w-auto pe-2">-->
-<!--                       0 ကျပ်-->
-<!--                    </p>-->
-<!--                </div>-->
-
-<!--                <div class="d-flex my-3 mb-3 border border-1 align-items-center justify-content-between pb-1" style="height: 50px">-->
-<!--                    <span id="ee" class="text-dark-50 ps-2">-->
-<!--                        စျေးနှုန်း-->
-<!--                    </span>-->
-<!--                    <p id="ff" class="mb-0 w-auto pe-2">-->
-<!--                       0 ကျပ်-->
-<!--                    </p>-->
-<!--                </div>-->
                     <table class="table border border-1 my-3 mb-3">
 
                       <tbody>
@@ -79,20 +53,30 @@
                         </tr>
                       </tbody>
                     </table>
-<!--                 gold price   -->
-                <form action="" id="calcform">
+<!--input part -->
+                 <div class="row">
+                     <div class=" col-6">
+                        <form action="" id="calcform">
 
-                    <div class="mb-3">
-                        <label class="form-label">ပေါက်စျေး</label>
-<!--                        <input type="text" id="four" class="form-control "  placeholder="1600000 (16 ပဲရည်)" >-->
-                        <select class="form-select" name="" id="from">
-                            <option value="1600000 (16 ပဲရည်)" id="type1">1600000 (16 ပဲရည်)</option>
-                            <option value="1600000 (16 ပဲရည်)" id="type2">1600000 (15 ပဲရည်)</option>
-                            <option value="1600000 (16 ပဲရည်)" id="type3">1600000 (13 ပဲရည်)</option>
-
-                        </select>
-                    </div>
-
+                            <div class="mb-3">
+                                <label class="form-label">ပေါက်စျေး</label>
+                                <select class="form-select" name="" id="form" >
+                                    <option value="16" id="type1">1600000 (16 ပဲရည်)</option>
+                                    <option value="15" id="type2"></option>
+                                    <option value="14" id="type3"></option>
+                             
+        
+                                </select>
+                            </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label ">စျေးနှုန်း</label>
+                            <input type="text" id="four" class="form-control border"  placeholder="0">
+                     </div>
+                 </div>   
+                
+<!-- button part -->
                     <div class="row mb-5 justify-content-around">
                         <div class="col-4">
                             <label class="form-label"> ကျပ်</label>
@@ -124,22 +108,36 @@
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        //start
+        let form=document.getElementById("form");
         let type1=document.getElementById("type1");
         let type2=document.getElementById("type2");
         let type3=document.getElementById( "type3");
-
-       let price1=type1.value;
-
-        type1.innerHTML =`1600000 (15 ပဲရည်)`;
-        type2.innerHTML =`1600000 (15 ပဲရည်)`;
-        type3.innerHTML =`1600000 (15 ပဲရည်)`;
+        let four=document.getElementById("four");
 
 
-        // input
+        var price1=1600000;
+        var price2=(1600000/16)*15;
+        var price3=(1600000/16)*13;        
+
+        type1.innerHTML =price1+`(16 ပဲရည်)`;
+        type2.innerHTML = price2+`(15 ပဲရည်)`;
+        type3.innerHTML = price3+`(13 ပဲရည်)`;
+
+        form.addEventListener("click",function(){
+            four.setAttribute("disabled",true);
+        })
+
+        four.addEventListener("click",function(){
+            form.setAttribute("disabled",true);
+        })
+
+
+        // get input
         let one=document.getElementById("one");
         let two=document.getElementById("two");
         let three=document.getElementById("three");
-        let four=document.getElementById("four");
+      
         let calculate=document.getElementById("calculate");
         let remove=document.getElementById("remove");
         let r1=document.getElementById("r1");
@@ -158,39 +156,87 @@
                 let ctwo=Number(two.value);
                 let cthree=Number(three.value);
                 let result=0;
+                let deciResult=0;
                 let tax=0;
+                let deciTax=0;
                 let totalPrice=0;
+                let deciTotal=0;
+                let cfour=0;
+                let isrole=form.hasAttribute("disabled");
 
+                // first condition
+                if(isrole){
+                    
+                    cfour=Number(four.value);
+                   
+                    
+                    result=(cthree/8+ctwo/16+cone)*cfour;
+                    deciResult=result.toFixed(2);
+                    tax=result*0.05;
+                    deciTax=tax.toFixed(2);
+                    totalPrice=tax+result;
+                    deciTotal=totalPrice.toFixed(2)
+                    
 
-                let cfour=Number(four.value);
+                 
+                    //disabled
+                    one.setAttribute("disabled",true);
+                    two.setAttribute("disabled",true);
+                    three.setAttribute("disabled",true);
+                    four.setAttribute("disabled",true);
 
-                if(cfour ==""){
-                    cfour=1600000;
+                    //output
+                    r1.innerHTML =`${deciResult} ကျပ်`;
+                    r2.innerHTML =`${deciTax} ကျပ်`;
+                    r3.innerHTML =`${deciTotal} ကျပ်`;
+
                 }
-                if(cone==""){
-                    cone=0;
-                }
-                if(ctwo ==""){
-                    ctwo=0;
-                }
-                if(cthree==""){
-                    cthree=0;
-                }
 
-                result=(cthree/8+ctwo/16+cone)*cfour;
-                tax=result*0.05;
-                totalPrice=tax+result;
-                console.log(cone,ctwo,cthree,cfour);
-                //disabled
-                one.setAttribute("disabled",true);
-                two.setAttribute("disabled",true);
-                three.setAttribute("disabled",true);
-                four.setAttribute("disabled",true);
+                // second condition
+                else{
+                    if(type1.value =="16"){
+                    cfour=price1;
+                    }
+                    else if(type2.value ==`15`){
+                        cfour=price2;
+                    }
+                    else{
+                        cfour=price3;
+                    }
 
-                r1.innerHTML =`${result} ကျပ်`;
-                r2.innerHTML =`${tax} ကျပ်`;
-                r3.innerHTML =`${totalPrice} ကျပ်`;
+                    if(cone==""){
+                        cone=0;
+                    }
+                    if(ctwo ==""){
+                        ctwo=0;
+                    }
+                    if(cthree==""){
+                        cthree=0;
+                    }
 
+                    result=(cthree/8+ctwo/16+cone)*cfour;
+                    deciResult=result.toFixed(2);
+                    tax=result*0.05;
+                    deciTax=tax.toFixed(2);
+                    totalPrice=tax+result;
+                    deciTotal=totalPrice.toFixed(2)
+                    
+                    
+                    //disabled
+                    one.setAttribute("disabled",true);
+                    two.setAttribute("disabled",true);
+                    three.setAttribute("disabled",true);
+                    form.setAttribute("disabled",true);
+                    four.setAttribute("disabled",true);
+                    
+                    //output
+                    r1.innerHTML =`${deciResult} ကျပ်`;
+                    r2.innerHTML =`${deciTax} ကျပ်`;
+                    r3.innerHTML =`${deciTotal} ကျပ်`;
+
+                    }
+
+               
 
 
         })
@@ -198,9 +244,19 @@
         // delete
         remove.addEventListener("click",function (e) {
             e.preventDefault();
+
+                //enabled            
+                one.disabled=false;
+                two.disabled=false;
+                three.disabled=false;
+                four.disabled=false;
+                form.disabled=false;
+
+                
                 one.value =``;
                 two.value =``;
                 three.value=``;
+                
                 r1.innerHTML =`0 ကျပ်`;
                 r2.innerHTML =`0 ကျပ်`;
                 r3.innerHTML =`0 ကျပ်`;
